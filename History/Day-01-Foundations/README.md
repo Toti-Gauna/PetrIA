@@ -24,12 +24,26 @@ later stage has somewhere to live.
   ignore rules, a security workflow, an environment-variables template, the
   architecture page and the decision records.
 - Wrote the roadmap: nine stages, 122 hours.
+- Merged the `PetrIA` foundations into `main` through a pull request.
+- Rolled out the same skeleton (project rules, README, ignore rules,
+  environment template, security workflow, Dependabot) to the other four
+  repositories. The files were reused from `PetrIA`, so the fixed workflow
+  (pinned actions, cooldown) went out from the start. CI passed on all four.
+- Verified, with a throwaway Postgres and toy data, how roles and grants stop
+  a read-only service from writing. A role with no grants gets
+  `permission denied for schema`; after `USAGE` it gets
+  `permission denied for table`; after `SELECT` it can read and still cannot
+  write.
+- Closed the stage with an explain-back: why one writer per schema, and who
+  enforces it (the database, through roles, not the application).
 
 ## What we did not do (and why)
 - **No application code.** The Next.js app is Stage 4. Starting it now would
   mean building a map with no data behind it.
-- **The other four repos are still empty.** They are set up one at a time, so
-  each structure is understood before the next one starts.
+- **No real code structure in the other four repos.** They only got the same
+  shared skeleton. Their language-specific layout, tests and tooling (Java
+  packages and JUnit, Python packages and pytest) are explained when each
+  repo's stage starts.
 - **No database yet.** It is created when `PetrIA-Ingest` first needs it
   (Stage 1).
 - **Nothing was assumed about the workflow.** It was only tested by pushing it.
@@ -58,4 +72,6 @@ least-privilege database roles, secret scanning, static analysis, and why
 [learning notes](../../docs/learning.md).
 
 ## Next
-Review the `PetrIA` structure, then set up the other repos one by one.
+Stage 1, data. Day 2 is research only: exploring the Vaca Muerta datasets in
+a Colab notebook, verifying every URL, column and license, and writing a
+data-quality report. No loader code and no database yet.
