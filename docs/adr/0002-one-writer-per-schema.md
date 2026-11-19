@@ -1,6 +1,6 @@
 # 0002. One writer per database schema
 
-Status: Proposed (2026-11-19)
+Status: Accepted (2026-11-19)
 
 ## Context
 Four services share one Postgres database (Neon, with PostGIS and pgvector).
@@ -40,6 +40,7 @@ read-only role *and* an allowlist.
 - Neon limits and role setup must be checked when the database is created
   (Stage 1).
 
-Open point: this was refined from an earlier "two schemas" idea (geo and
-platform) once it was clear that the detector and the assistant also write
-data. It stays `Proposed` until the project owner confirms it.
+Note: this was refined from an earlier "two schemas" idea (geo and platform)
+once it was clear that the detector and the assistant also write data. The
+project owner confirmed it on 2026-11-19, after checking with a throwaway
+Postgres that a read-only role gets `permission denied` on writes.

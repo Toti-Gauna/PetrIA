@@ -10,7 +10,8 @@ later stage has somewhere to live.
 - **Five repositories** instead of a monorepo
   ([ADR-0001](../../docs/adr/0001-polyrepo-and-service-boundaries.md)).
 - **One writer per database schema**
-  ([ADR-0002](../../docs/adr/0002-one-writer-per-schema.md), still proposed).
+  ([ADR-0002](../../docs/adr/0002-one-writer-per-schema.md), accepted after
+  a hands-on check with a throwaway Postgres).
 - **Public repositories from the first commit**, with a secrets policy
   ([ADR-0003](../../docs/adr/0003-public-repos-and-secrets-policy.md)).
 - Docs and the build log live in this repo, `PetrIA`, so the portfolio can
@@ -42,6 +43,7 @@ later stage has somewhere to live.
   add `cooldown: default-days: 7` to Dependabot. The SHAs were read from the
   actions' public repositories, not guessed. Why it matters: a tag can be
   moved by the action's owner, a commit SHA cannot.
+- Second run, after the fix: both jobs passed.
 
 ## Open problems
 - The assistant's sandbox cannot reach `datos.gob.ar` (blocked by the network

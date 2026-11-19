@@ -50,6 +50,16 @@ request, and we choose when to merge it.
 release. Malicious releases are usually detected and removed within days. It
 reduces the risk; it does not remove it.
 
+**Postgres roles and grants.** A role is an identity in the database; a role
+with `LOGIN` is what a service connects as (the username in its connection
+string). Permissions are layered and **denied by default**: `USAGE` on the
+schema (can enter), then `SELECT`/`INSERT`/`UPDATE`/`DELETE` on each table,
+and ownership for structure changes (`DROP`, `ALTER`). In SQL Server terms:
+login + user + `GRANT`, but Postgres merges login, user and role into one
+thing. We verified it on a throwaway database: a role with no grants gets
+`permission denied for schema`; after `USAGE` it gets `permission denied for
+table`; after `SELECT` it can read, and still cannot write.
+
 ### Interview questions
 
 1. **Why five repositories instead of a monorepo?**
@@ -89,7 +99,18 @@ reduces the risk; it does not remove it.
    The image is the read-only template; a container is a running instance of
    it. One image can start many containers.
 
-10. **What does PetrIA claim, and what does it not claim?**
+10. **Who stops a service from writing to another service's schema: the
+    application or the database?**
+    The database. Each service connects with its own role, and Postgres checks
+    every statement against that role's grants. It does not depend on the
+    application code being correct.
+
+11. **A role can `SELECT` from a table but gets `permission denied for
+    schema`. Why?**
+    Permissions are layered. It lacks `USAGE` on the schema, which is checked
+    before the table's `SELECT`.
+
+12. **What does PetrIA claim, and what does it not claim?**
    It estimates *expected* productivity from existing wells using public data.
    It does not find oil (seismic data is not public) and it is not investment
    or drilling advice.

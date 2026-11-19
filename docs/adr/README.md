@@ -17,7 +17,7 @@ context, the options considered, what we chose, and the consequences.
 | # | Title | Status |
 |---|---|---|
 | [0001](0001-polyrepo-and-service-boundaries.md) | Polyrepo and service boundaries | Accepted |
-| [0002](0002-one-writer-per-schema.md) | One writer per database schema | Proposed |
+| [0002](0002-one-writer-per-schema.md) | One writer per database schema | Accepted |
 | [0003](0003-public-repos-and-secrets-policy.md) | Public repositories and secrets policy | Accepted |
 
 ## Template
