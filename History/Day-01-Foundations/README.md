@@ -31,8 +31,17 @@ later stage has somewhere to live.
   each structure is understood before the next one starts.
 - **No database yet.** It is created when `PetrIA-Ingest` first needs it
   (Stage 1).
-- **The workflow has not run yet.** It is written and its YAML parses, but a
-  GitHub Actions run is the only real test. We check it after the first push.
+- **Nothing was assumed about the workflow.** It was only tested by pushing it.
+
+## First CI run (real result)
+- gitleaks: passed, no secrets found.
+- Semgrep: **failed with 4 findings**, all in our own CI configuration:
+  three GitHub Actions referenced by a mutable tag (`@v4`, `@v2`) and a
+  Dependabot config without a cooldown.
+- Fix: pin every action to a full commit SHA (version kept in a comment) and
+  add `cooldown: default-days: 7` to Dependabot. The SHAs were read from the
+  actions' public repositories, not guessed. Why it matters: a tag can be
+  moved by the action's owner, a commit SHA cannot.
 
 ## Open problems
 - The assistant's sandbox cannot reach `datos.gob.ar` (blocked by the network

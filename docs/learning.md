@@ -34,6 +34,22 @@ Semgrep looks for *dangerous code*.
 **`NEXT_PUBLIC_` variables.** Next.js inlines them into the JavaScript sent to
 the browser. They are public by design.
 
+**Docker, image, container.** An *image* is a frozen, read-only package of an
+app and everything it needs, built from a `Dockerfile`. A *container* is a
+running, isolated instance of an image (class vs object). Nothing is installed
+on the host. In our CI, GitHub starts a container from `semgrep/semgrep` and
+removes it when the job ends.
+
+**Supply-chain pinning.** A tag such as `actions/checkout@v4` is a label the
+owner can move. A full commit SHA is a fingerprint that cannot change. Pinning
+makes builds reproducible and blocks a silent swap of the code that runs in
+our CI. Updates are still possible: Dependabot proposes a new SHA as a pull
+request, and we choose when to merge it.
+
+**Dependabot cooldown.** Wait N days (we use 7) before proposing a new
+release. Malicious releases are usually detected and removed within days. It
+reduces the risk; it does not remove it.
+
 ### Interview questions
 
 1. **Why five repositories instead of a monorepo?**
@@ -64,7 +80,16 @@ the browser. They are public by design.
 7. **Why must a `NEXT_PUBLIC_` variable never hold a secret?**
    It is bundled into client-side JavaScript, so anyone can read it.
 
-8. **What does PetrIA claim, and what does it not claim?**
+8. **Your own CI flagged your CI. What happened?**
+   Semgrep reported actions pinned to mutable tags and a Dependabot config
+   with no cooldown. Both are supply-chain risks. I pinned the actions to
+   commit SHAs and added a 7-day cooldown.
+
+9. **Difference between a Docker image and a container?**
+   The image is the read-only template; a container is a running instance of
+   it. One image can start many containers.
+
+10. **What does PetrIA claim, and what does it not claim?**
    It estimates *expected* productivity from existing wells using public data.
    It does not find oil (seismic data is not public) and it is not investment
    or drilling advice.
