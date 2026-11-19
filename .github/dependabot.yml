@@ -1,0 +1,7 @@
+version: 2
+updates:
+  # Language ecosystems are added when each repo gets its first dependencies.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
