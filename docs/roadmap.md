@@ -1,7 +1,8 @@
 # Roadmap: waves from 0 to 3.0
 
-North star: one complete project that I can explain end to end, shipped in
-dated versions. If a version slips, the dates move, not the depth.
+North star: one complete project that I can explain end to end, that also looks
+great ("wow"), shipped in dated versions. If a version slips, the dates move,
+not the depth.
 
 ## How to read this
 - **Wave** = one version (1.0, 1.1, 2.0, 3.0), plus Wave 0 for foundations.
@@ -10,13 +11,24 @@ dated versions. If a version slips, the dates move, not the depth.
   private hours log.
 - **Dates** = windows, not promises. Each window has slack (see the table).
 - **Model and effort** = a suggestion for the AI that builds the batch, not a
-  measured result.
-  - *Strong* (Opus 5.5): design, safety-critical or subtle logic.
-  - *Standard* (Sonnet 5.5): most build work.
-  - *Light* (Haiku 5.5): mechanical, repetitive work.
-  - Fable 5.2 also exists, but there is no basis here to place it.
-  - *Effort* (low, medium, high) is how much the AI should think per task.
+  measured result. Tiers:
+  - **Wow** (Fable 5.2): everything a person sees or hears: the map, the
+    charts, the assistant panel, the design system, the demos. The owner
+    describes this as the strongest and most expensive tier. Its capabilities
+    and its cost on the plan are not verified here.
+  - **Strong** (Opus 5.5): subtle or safety-critical logic (the detector,
+    generated SQL, login and tenant isolation, operations).
+  - **Standard** (Sonnet 5.5): plain building work (ingestion, API, services,
+    integrations).
+  - **Light** (Haiku 5.5): mechanical work. Rarely needed.
+  - **Effort** (low, medium, high) is how much the AI should think per task.
     Higher effort is slower and uses more of the plan's limits.
+- **Cost guard:** after the first Wow batch (1E), check the plan's usage and
+  decide if the pace is sustainable. If limits bite, Wow batches fall back to
+  Strong.
+- **Switching models:** this session runs on Sonnet 5.5. A Wow batch needs the
+  model switched in the app, or a helper started on Fable for that batch (not
+  tested here yet).
 - Every batch ends with: a pull request with a written review, an explain-back,
   "break it" experiments, and updated docs.
 
@@ -48,12 +60,12 @@ Public map + detector + assistant, deployed.
 | 1B | Ingestion: Neon, schemas and roles, loaders for wells, production, fracturing, cleaning, monthly job. *Spot: hash-map well index (no-AI)* | Standard · medium | 13 | Nov 21–22 |
 | 1C | Detector: leakage-safe features, LightGBM quantile (P10/P50/P90), spatial CV, H3 grid, registry. *Spots: sliding window, binary search (no-AI); k-d tree (AI-assisted)* | **Strong · high** | 18 | Nov 23–25 |
 | 1D | Read-only API: Spring Boot, endpoints, OpenAPI | Standard · medium | 6 | Nov 26 |
-| 1E | Map: wells, heat map, concessions, cell detail | Standard · medium | 12.5 | Nov 27–28 |
-| 1F | Assistant: read-only SQL tool, detector lookup, RAG, citations, abstention, 20 evals | **Strong · high** | 12.5 | Nov 29–30 |
-| 1G | Ship: deploy, README, demo, release notes 1.0 | Standard · low | 6 | Dec 1 |
+| 1E | Map: wells, heat map that shows uncertainty, concessions, cell detail card, smooth loading | **Wow · high** | 12.5 | Nov 27–28 |
+| 1F | Assistant: read-only SQL tool, detector lookup, RAG, citations, abstention, 20 evals; chat panel with clickable citations | **Strong · high** (logic) + **Wow · medium** (panel) | 12.5 | Nov 29–30 |
+| 1G | Ship: deploy, README with visuals, architecture diagram, demo, release notes 1.0 | **Wow · medium** | 6 | Dec 1 |
 
-Why strong·high: the detector can look great and be wrong (data leakage), and
-the assistant runs generated SQL, so safety matters.
+Why Strong: the detector can look great and be wrong (data leakage), and the
+assistant runs generated SQL, so safety matters.
 If we slip: fewer evals first, then drop the concessions layer.
 
 ## Wave 2 · 1.1 Product (Dec 2–12)
@@ -61,16 +73,15 @@ The tools people use, plus the quality and safety around them.
 
 | Batch | What it is | Model · effort | Hours | Window |
 |---|---|---|---|---|
-| 2A | Flagship tools: well value calculator (NPV, payback, breakeven), decline forecast (Arps) | Standard · medium | 12 | Dec 2–3 |
+| 2A | Flagship tools: well value calculator (live sliders and charts; NPV, payback, breakeven), decline forecast (Arps, with a P10–P90 band) | **Wow · medium** (screens) + Standard (formulas, tested) | 12 | Dec 2–3 |
 | 2B | Assistant hardening: 40–60 evals, structured outputs, retries, cost traces and cap, model router, semantic cache. *Spot: LRU cache (AI-assisted)* | **Strong · high** | 12.5 | Dec 4–5 |
 | 2C | Identity: Keycloak, OIDC, tenants, saved zones, history. *Spot: undo/redo stack (AI-assisted)* | **Strong · high** | 12.5 | Dec 6–7 |
-| 2D | Daily report reader (PDF, Excel or photo to validated data) | Standard · medium | 6 | Dec 8 |
-| 2E | Quality gates: Pact, Playwright, accessibility, Lighthouse, ES/EN | Standard · medium | 12 | Dec 9–10 |
+| 2D | Daily report reader (PDF, Excel or photo to validated data), with a review screen that highlights the extracted fields | Standard · medium (extraction) + **Wow · medium** (screen) | 6 | Dec 8 |
+| 2E | Quality gates: Pact, Playwright, accessibility, Lighthouse, ES/EN, AI UX polish | Standard · medium (tests) + **Wow · medium** (UX polish) | 12 | Dec 9–10 |
 | 2F | Observability and safety: OpenTelemetry, one k6 scenario with a mock LLM, MCP server, threat model. *Spot: token bucket (AI-assisted)* | Strong · medium | 12.5 | Dec 10–11 |
-| 2G | Release 1.1: README, notes, demo, mock interview | Standard · low | 6.5 | Dec 12 |
+| 2G | Release 1.1: README, notes, demo video, mock interview | **Wow · low** | 6.5 | Dec 12 |
 
-Why strong·high: tenant isolation and LLM safety are the parts that break
-quietly.
+Why Strong: tenant isolation and LLM safety are the parts that break quietly.
 If we slip: the report reader and the k6 scenario move to 2.0.
 
 ## Wave 3 · 2.0 Platform (Dec 13–22)
@@ -82,9 +93,9 @@ Reach people outside the web app. Reusable parts go into `platform-kit`.
 | 3B | WhatsApp (Meta Cloud API): templates, buttons, webhooks | Standard · medium | 10 | Dec 15–16 |
 | 3C | Email (Amazon SES): DNS records, bounces, unsubscribe, weekly PDF | Standard · medium | 8 | Dec 17 |
 | 3D | Phone (ElevenLabs agent + Twilio) | Standard · medium | 10 | Dec 18–19 |
-| 3E | Voice assistant: speech in, tools, speech out, barge-in, confirmations | **Strong · high** | 14 | Dec 19–21 |
+| 3E | Voice assistant: speech in, tools, speech out, barge-in, confirmations; conversation design and on-screen experience | **Strong · high** (logic) + **Wow · medium** (experience) | 14 | Dec 19–21 |
 | 3F | Usage metering and quotas per tenant | Standard · medium | 3 | Dec 21 |
-| 3G | Design system with Storybook | Standard · low | 7 | Dec 22 |
+| 3G | Design system with Storybook | **Wow · high** | 7 | Dec 22 |
 
 Risks: approval lead times (WhatsApp, SES) are unverified; each third-party
 API needs a key and, in this setup, network approval; spending is capped at
@@ -97,14 +108,26 @@ Prove it holds up, and show the extras.
 |---|---|---|---|---|
 | 4A | load-lab: k6 users and spikes, mock LLM, S/M/L data, chaos, Grafana | Standard · high | 24 | Dec 23–26 |
 | 4B | Operations: SLOs and alerts, feature flags, safe migrations, backup drill, graceful degradation, runbooks | **Strong · high** | 22 | Dec 27–30 |
-| 4C | Scale report: users, p95, breaking point, fix, cost per user | Standard · medium | 6 | Dec 31 – Jan 1 |
+| 4C | Scale report: users, p95, breaking point, fix, cost per user, with clear charts | **Wow · medium** | 6 | Dec 31 – Jan 1 |
 | 4D | AWS ingestion: S3, SQS, Lambda | Standard · medium | 10 | Jan 2 |
-| 4E | AR well with AR Quick Look (USDZ, opened from the web) | Standard · medium | 5 | Jan 3 |
-| 4F | Simulated sensors on Wokwi with MQTT and a live dashboard | Standard · medium | 6 | Jan 3–4 |
+| 4E | AR well with AR Quick Look (USDZ, opened from the web) | **Wow · high** | 5 | Jan 3 |
+| 4F | Simulated sensors on Wokwi with MQTT and a live dashboard | Standard · medium (pipeline) + **Wow · medium** (dashboard) | 6 | Jan 3–4 |
 | 4G | GPS "wells near me" and phone scanner | Standard · low | 8 | Jan 4–5 |
 
 Notes: the 100M-row test waits for the new PC, and whether Neon can hold it is
 unverified. Simulated parts are always labeled.
+
+## What "wow" means, per wave (ideas to validate, not promises)
+- **1.0:** a map that feels fast, a heat map that shows how sure we are, one
+  click on a cell for the P10/P50/P90 story, and answers whose citations you
+  can click.
+- **1.1:** sliders that move a well's value live, a decline curve with its
+  uncertainty band, and a photo of a paper report turning into highlighted,
+  validated fields.
+- **2.0:** a WhatsApp message with buttons, a phone call as fallback, and a
+  voice command that moves the map.
+- **3.0:** a Scale report that says where it broke and how it was fixed, an AR
+  well on your table, and a live sensor dashboard.
 
 ## Where we are now
 Wave 1, batch 1A: the verification notebook is merged, and the next step is to
