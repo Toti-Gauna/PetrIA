@@ -16,9 +16,12 @@ context, the options considered, what we chose, and the consequences.
 
 | # | Title | Status |
 |---|---|---|
-| [0001](0001-polyrepo-and-service-boundaries.md) | Polyrepo and service boundaries | Accepted |
+| [0001](0001-polyrepo-and-service-boundaries.md) | Polyrepo and service boundaries | Accepted (amended by 0004) |
 | [0002](0002-one-writer-per-schema.md) | One writer per database schema | Accepted |
 | [0003](0003-public-repos-and-secrets-policy.md) | Public repositories and secrets policy | Accepted |
+| [0004](0004-platform-kit-shared-modules.md) | platform-kit: one shared repository for reusable modules | Accepted |
+| [0005](0005-data-license-unconfirmed.md) | The data license is unconfirmed: non-commercial demo | Accepted |
+| [0006](0006-usage-metering-instead-of-billing.md) | Usage metering and quotas instead of billing | Accepted |
 
 ## Template
 

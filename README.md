@@ -10,9 +10,11 @@ by citing official data.
 
 ## Status
 
-**Stage 0: foundations.** The design, the decisions and the repo structure
-exist. No feature is implemented yet. Metrics for the detector and the
-assistant will be published here only after they are measured.
+**Version 1.0 (MVP) in progress, due Dec 1.** The foundations, the
+[design](docs/design.md) and the decisions exist, and the data research is
+done. The dataset facts are not yet verified against the real files, so no
+feature is implemented. Metrics for the detector and the assistant will be
+published here only after they are measured.
 
 ## How it is built
 
@@ -26,22 +28,24 @@ PetrIA is five repositories, each deployable on its own:
 | [PetrIA-Ingest](https://github.com/Toti-Gauna/PetrIA-Ingest) | Data pipeline into PostGIS | Python, PostGIS, RabbitMQ |
 | [PetrIA-ML](https://github.com/Toti-Gauna/PetrIA-ML) | The detector (productivity model) | Python, LightGBM, H3 |
 
-Read the [architecture](docs/architecture.md) and the
-[decision records](docs/adr/README.md) to see how the pieces fit and why.
+A sixth repository, `platform-kit`, will hold the reusable modules of version
+2.0 ([ADR-0004](docs/adr/0004-platform-kit-shared-modules.md)).
 
-## Roadmap (122 h, Nov 19 to Dec 5, 2026)
+Read the [design](docs/design.md), the [architecture](docs/architecture.md)
+and the [decision records](docs/adr/README.md) to see how the pieces fit and
+why.
 
-| Stage | What | Repo |
+## Roadmap
+
+Each version ships with release notes, a demo video and an updated README. If
+a version slips, the dates move, not the depth.
+
+| Version | Date | Contents |
 |---|---|---|
-| 0 | Foundations: repos, CI, ADRs, docs | all |
-| 1 | Data: clean wells, production and fracturing in PostGIS | Ingest |
-| 2 | Detector: P10/P50/P90 predictions on a hex grid | ML |
-| 3 | Backend core: read-only geo endpoints | BE |
-| 4 | Map: wells, heat map, concessions | PetrIA |
-| 5 | Auth and tenants: Keycloak, organizations, saved zones | BE + PetrIA |
-| 6 | Assistant: RAG, citations, abstention, evals, cost cap | RAG |
-| 7 | Quality: contract tests, end-to-end tests, CI hardening | all |
-| 8 | Deploy and wrap-up | all |
+| 1.0 MVP | Dec 1 | Data pipeline, detector (P10/P50/P90 on a hex grid), read-only API, map, assistant with citations, deploy |
+| 1.1 Product | Dec 12 | Well value calculator, decline forecast, daily report reader, full evals and cost cap, login and tenants, contract and end-to-end tests, accessibility, ES/EN, tracing, MCP server, threat model |
+| 2.0 Platform | Dec 22 | Notifications (WhatsApp, email, phone), voice assistant, usage metering and quotas, design system |
+| 3.0 Production | Jan 5 | Load testing and chaos, operations runbooks, Scale report, AWS ingestion, AR well, simulated sensors, GPS |
 
 ## Repository layout
 
