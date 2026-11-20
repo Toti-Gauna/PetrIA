@@ -16,6 +16,9 @@ format makes review fast and honest.
 3. **How to run or test it:** the exact command.
 4. **What was tested:** the real result. Say what failed or was not tested.
 5. **Risks and open questions.**
+6. **Next batch:** its name and what it is (from `docs/roadmap.md`), the model
+   and effort to use for it, the hours, and what the owner must do first. Say
+   it every time a batch closes, so the owner can switch the model in time.
 
 ## Pull request rules
 - One pull request per module or per day. The title is conventional
