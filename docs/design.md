@@ -47,7 +47,9 @@ users (see ADR-0005).
 - Does any license apply to the datasets? The official catalog says "No se
   especificó la licencia" for every dataset seen ([data sources](data-sources.md)).
   Whether portal-wide terms apply is not verified.
-- Is `idpozo` one id per physical well or per well-and-formation? The research
-  suggests per formation, and the notebook must confirm it.
-- How do wells link to concessions: an id, a name, or only geometry?
+- Is `idpozo` one id per physical well or per well-and-formation? 85,858 ids
+  against 78,592 well names says it is finer than a well; the reason is not
+  proven ([data sources](data-sources.md)).
+- How do wells link to concessions: an id, a name, or only geometry? No key is
+  verified yet.
 - Will the detector beat the neighbor average under spatial cross-validation?
