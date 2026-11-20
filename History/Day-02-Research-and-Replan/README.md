@@ -53,18 +53,40 @@ version slips, the dates move, not the depth.
 ## What we built
 - The project rules (`CLAUDE.md`) updated in all five repositories.
 - The one-page [design](../../docs/design.md).
+- The [roadmap by waves](../../docs/roadmap.md): every version split into batches,
+  with hours, window, and a suggested model and effort.
 - ADRs 0004 to 0006, and the README roadmap by version.
-- A verification notebook in `PetrIA-Ingest` that checks the research claims
-  against the real files (it has not run against the real portal yet).
+- A verification notebook in `PetrIA-Ingest` (v2 after run 1) that checks the
+  research claims against the real files. It has run on the catalog only.
+- [Data sources](../../docs/data-sources.md): what is verified, what is not.
+- The agent team, first step ([ADR-0007](../../docs/adr/0007-agent-team-and-shared-skills.md)):
+  five shared skills, `petria-security` (read-only) and `petria-data-ml`, and
+  the SDD spec template in `docs/specs/`. Not yet smoke-tested.
+
+## First verification run (2026-11-20, evening)
+The notebook ran in Colab. Result: **the catalog answered, the file host did
+not.** Facts verified from the catalog are in [data sources](../../docs/data-sources.md).
+- License: the official field says "No se especificó la licencia" for every
+  dataset seen. The "CC-BY 4.0" claim from the research is not supported.
+- The real dataset slugs differ from two of the research's guesses (404).
+- New find: a wells list with the date of first production, useful for the
+  detector's 12-month window.
+- Two of the research's claims were contradicted or unconfirmed (fracturing
+  "last modified" date; "single cumulative CSV").
+- No file was downloaded: `datos.energia.gob.ar` timed out from Colab.
+- Fix: notebook v2 adds an upload path for files downloaded by hand, stops
+  waiting on a silent host, and picks the newest of repeated resource names.
+  26 offline checks pass.
 
 ## Not done (and why)
-- **No dataset fact is verified.** The notebook has to run where the portal is
-  reachable (Google Colab) first.
+- **No file-level fact is verified.** Only catalog metadata is. Columns,
+  coordinates, keys and row counts wait for run 2 (uploaded files).
 - **No code for the pipeline.** Writing loaders before knowing the real
   columns, coordinate system and keys would be guessing.
 
 ## Next
-Run the verification notebook in Colab, record what is real, then Day 3:
+Run the verification notebook in Colab (it is merged and ready), record what is
+real, then Day 3:
 database schemas and roles, and the wells and production loaders.
 
 ## New concepts

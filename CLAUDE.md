@@ -94,3 +94,7 @@ Keycloak realm, added later).
 The developer's portfolio consumes `docs/` and `History/` directly from this
 repo. Keep them public-safe: plain GitHub-flavored Markdown, relative
 links, diagrams as images, no personal or private information.
+
+Agents and shared skills live in `.claude/agents` and `.claude/skills`
+([ADR-0007](docs/adr/0007-agent-team-and-shared-skills.md)). Specs live in
+`docs/specs/`.

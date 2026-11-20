@@ -40,6 +40,9 @@ why.
 Each version ships with release notes, a demo video and an updated README. If
 a version slips, the dates move, not the depth.
 
+The batch-by-batch plan, with model and effort per batch, is in the
+[roadmap](docs/roadmap.md).
+
 | Version | Date | Contents |
 |---|---|---|
 | 1.0 MVP | Dec 1 | Data pipeline, detector (P10/P50/P90 on a hex grid), read-only API, map, assistant with citations, deploy |
