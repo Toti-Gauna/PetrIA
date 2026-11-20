@@ -1,6 +1,6 @@
 # 0001. Polyrepo and service boundaries
 
-Status: Accepted (2026-11-19)
+Status: Accepted (2026-11-19) · Amended by [0004](0004-platform-kit-shared-modules.md)
 
 ## Context
 PetrIA has five independently deployable parts: a web app, a Java API, an AI

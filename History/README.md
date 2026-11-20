@@ -6,3 +6,4 @@ decided, and what is still open. It is updated with every push.
 | Day | Date | Focus |
 |---|---|---|
 | [Day 1](Day-01-Foundations/README.md) | 2026-11-19 | Foundations: repos, decisions, the `PetrIA` repo structure |
+| [Day 2](Day-02-Research-and-Replan/README.md) | 2026-11-20 | Data research, re-plan into versions, shared decisions |
