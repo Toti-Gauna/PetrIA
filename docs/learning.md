@@ -213,6 +213,41 @@ stop condition.
    adds: it costs time and usage, so we evaluate it (batch A6) instead of
    assuming it helps.
 
+### Run 2: more concepts and questions
+
+**Colab and notebooks.** A notebook is a document of cells, some text and some
+code, run one at a time with the result shown below each. Colab is Google's
+free service that runs notebooks on a temporary Google machine, in the browser.
+It is for exploring, not for production: the machine and its files disappear
+after a while. The monthly ingestion will be normal Python code in
+`PetrIA-Ingest`, tested in CI.
+
+**An overlap percentage is evidence of a shared key.** If 99.85% of the ids in
+one table appear in another, the ids almost certainly mean the same thing. If
+the overlap were 5%, they would not.
+
+**Sanity box.** Check coordinates against where the data must be. Longitude -38
+is in the Atlantic and latitude -69 is in Antarctica: both are impossible for an
+Argentine well, so the values are swapped or wrong.
+
+**Left-censoring.** A dataset that starts in 2006 cannot show a start date
+before 2006. Wells that began earlier appear to start in January 2006. A model
+that learns from "start date" would be misled for those wells.
+
+Interview questions:
+1. **How do you decide that two tables share a key?** Measure the overlap of
+   the ids in both directions, and compare with what the key should mean. Here,
+   99% of production ids exist in the registry.
+2. **Your data has 85,858 ids but 78,592 names. What do you do?** Do not assume
+   the id means a well. Check why names repeat (for example, one name per
+   formation) before choosing the data model.
+3. **A shapefile's bounding box reaches latitude -69. What is wrong?** Some
+   points have latitude and longitude swapped. Count them, define a rule to fix
+   them, and keep the original value.
+4. **Why was the research report not enough?** It came from secondary sources:
+   the real registry had 26 columns, not 5. Verification against the files
+   changed the design.
+
 ## Algorithms used in production
 
 *(None yet. The first spot is the hash-map well index in `PetrIA-Ingest`.)*

@@ -30,7 +30,8 @@ not the depth.
   model switched in the app, or a helper started on Fable for that batch (not
   tested here yet).
 - Every batch ends with: a pull request with a written review, an explain-back,
-  "break it" experiments, and updated docs.
+  "break it" experiments, and updated docs,
+  and a note on the next batch: what it is, and which model and effort to use.
 
 ## The five waves at a glance
 | Wave | Version | Window | Planned h | Slack | Demo (30 seconds) |

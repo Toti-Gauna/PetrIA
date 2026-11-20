@@ -78,9 +78,25 @@ not.** Facts verified from the catalog are in [data sources](../../docs/data-sou
   waiting on a silent host, and picks the newest of repeated resource names.
   26 offline checks pass.
 
+## Second verification run (2026-11-20, evening): the real files
+The owner downloaded six files by hand and uploaded them to the notebook, which
+read them for the first time. Full numbers and fingerprints are in
+[data sources](../../docs/data-sources.md).
+- **Confirmed:** production has the 40 expected columns and no duplicate
+  (`idpozo`, `anio`, `mes`); the shapefile is EPSG:4326; fracturing has one row
+  per operation; `idpozo` joins all four tables (83% to 99.9% overlap).
+- **Contradicted:** the registry has 26 columns, not 5, and no
+  `coordenadax`/`coordenaday`/`formprod`; the license is not CC-BY.
+- **New problems:** some wells have swapped latitude and longitude (the shapefile
+  reaches -69 in latitude); the first-production list is cut off at 2006; about
+  23% of production wells have no fracturing record.
+- The retry logic worked on a real server error (a 500 on the lots dataset that
+  succeeded on the second try).
+
 ## Not done (and why)
-- **No file-level fact is verified.** Only catalog metadata is. Columns,
-  coordinates, keys and row counts wait for run 2 (uploaded files).
+- **Several file-level facts are still unmeasured**: the latest month of data,
+  units, how many coordinates are swapped, and how often fracturing values are
+  placeholder zeros. They wait for run 3.
 - **No code for the pipeline.** Writing loaders before knowing the real
   columns, coordinate system and keys would be guessing.
 
