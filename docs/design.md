@@ -44,7 +44,9 @@ users (see ADR-0005).
 | Lead times (WhatsApp verification, email sending approval) | Owner started the paperwork early (durations unverified) |
 
 ## Open questions
-- Which license applies to each dataset, and does it allow commercial use?
+- Does any license apply to the datasets? The official catalog says "No se
+  especificó la licencia" for every dataset seen ([data sources](data-sources.md)).
+  Whether portal-wide terms apply is not verified.
 - Is `idpozo` one id per physical well or per well-and-formation? The research
   suggests per formation, and the notebook must confirm it.
 - How do wells link to concessions: an id, a name, or only geometry?

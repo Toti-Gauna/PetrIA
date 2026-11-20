@@ -143,6 +143,30 @@ give credit, link the license and say what you changed. When the license is
 unclear, the safe default is a non-commercial demo with attribution. This is
 not legal advice.
 
+**Catalog vs file host.** A portal can answer metadata questions (what
+exists, license, dates) from one server while the files live on another. Run 1
+reached the first and not the second. Always test the path the data actually
+travels, not only the front door.
+
+**Fail fast on a dead host.** Waiting 30 seconds on every request to a host that
+never answers turned a 1-minute run into 12. The fix is a circuit breaker: after
+the first connection failure, stop trying that host and say so in the report.
+Retry only temporary failures (500, read timeouts), never a 404.
+
+**Claims vs reality.** A research report is a list of claims. Run 1 confirmed
+some (dataset names, one CSV for fracturing), contradicted others (a "last
+modified" date, a license) and found something new (a first-production-date
+list). Record each as verified, not confirmed, or new.
+
+**Agent vs workflow; skills vs agents.** An *agent file* defines a role: its
+instructions, tools and model. A *skill* is a reusable procedure (how to write a
+spec, how to hand work back) that several agents share. The role differs; the
+basic habits are the same.
+
+**SDD (spec-driven development).** Write the one-page spec first, get the
+owner's OK, then code. The spec has non-goals, a testable "done when" and a
+stop condition.
+
 ### Interview questions
 
 1. **Your research report says the data has certain columns. Do you trust it?**
@@ -168,6 +192,26 @@ not legal advice.
    The data license is unconfirmed, and payments are not the skill the project
    shows. Usage metering and quotas reuse the cost traces and take about a
    third of the time (ADR-0006).
+
+6. **When is something an agent, and when a workflow?**
+   A workflow has fixed steps (for example, reading a daily report into
+   validated fields). An agent chooses its steps depending on the input (the
+   assistant picking between SQL, the detector and document search). Use a
+   workflow whenever the steps are known: it is cheaper, faster and testable.
+
+7. **Why is the security reviewer read-only?**
+   Least privilege: the one who reviews should not be able to change the code
+   it reviews. It also limits the damage if its instructions are manipulated.
+
+8. **What is SDD and why use it with AI agents?**
+   Spec-driven development: a one-page spec (problem, requirements, non-goals,
+   done-when, stop condition) before any code. With agents it removes silent
+   assumptions and gives you something to review before they write code.
+
+9. **Why build specialist agents instead of one general assistant?**
+   Separation of concerns, reuse, and model tiers per role. The honest answer
+   adds: it costs time and usage, so we evaluate it (batch A6) instead of
+   assuming it helps.
 
 ## Algorithms used in production
 

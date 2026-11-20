@@ -117,6 +117,25 @@ Prove it holds up, and show the extras.
 Notes: the 100M-row test waits for the new PC, and whether Neon can hold it is
 unverified. Simulated parts are always labeled.
 
+## Track A · Agent team (cross-cutting, paid from slack)
+Specialist agents for building PetrIA ([ADR-0007](adr/0007-agent-team-and-shared-skills.md)),
+each created just before the batch that needs it. Adapted from the owner's own
+agent library, in English, with the stack swapped.
+
+| Batch | What it is | Model · effort | Hours | When |
+|---|---|---|---|---|
+| A1 | ADR-0007, five shared skills (`sdd`, `discovery`, `evidence`, `handoff`, `teach-back`), `petria-security` (read-only), `petria-data-ml`, smoke test | Strong · high | 5 | Drafted Nov 20; smoke test Nov 21 |
+| A2 | `petria-backend` (Spring Boot and FastAPI) | Strong · medium | 2.5 | Nov 26 |
+| A3 | `petria-frontend` (Next.js, MapLibre) | **Wow · medium** | 2 | Nov 27 |
+| A4 | `petria-docs` and `petria-demo`, if the owner's versions fit | Standard · medium | 1.5 | Dec 1 |
+| A5 | Retro: what worked, tune, check usage, send the final versions back to the owner's library | Standard · medium | 1.5 | Dec 2 |
+| A6 | Agent evals: plant bugs (a data leak, an SQL injection) and measure what the agents catch | Strong · high | 4 | Dec 11–12 |
+| A7 | `petria-devops` | Standard · medium | 2 | Dec 13 |
+| A8 | Agent team report: what each did, mistakes, usage, lessons | **Wow · medium** | 2 | Jan 5 |
+
+About 20.5 h in total, taken from the slack of each wave. Wave 1 keeps about
+12 h of slack after A1 to A4.
+
 ## What "wow" means, per wave (ideas to validate, not promises)
 - **1.0:** a map that feels fast, a heat map that shows how sure we are, one
   click on a cell for the P10/P50/P90 story, and answers whose citations you

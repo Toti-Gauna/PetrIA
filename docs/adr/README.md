@@ -22,6 +22,7 @@ context, the options considered, what we chose, and the consequences.
 | [0004](0004-platform-kit-shared-modules.md) | platform-kit: one shared repository for reusable modules | Accepted |
 | [0005](0005-data-license-unconfirmed.md) | The data license is unconfirmed: non-commercial demo | Accepted |
 | [0006](0006-usage-metering-instead-of-billing.md) | Usage metering and quotas instead of billing | Accepted |
+| [0007](0007-agent-team-and-shared-skills.md) | A team of specialist agents with shared skills | Accepted |
 
 ## Template
 
