@@ -53,6 +53,8 @@ version slips, the dates move, not the depth.
 ## What we built
 - The project rules (`CLAUDE.md`) updated in all five repositories.
 - The one-page [design](../../docs/design.md).
+- The [roadmap by waves](../../docs/roadmap.md): every version split into batches,
+  with hours, window, and a suggested model and effort.
 - ADRs 0004 to 0006, and the README roadmap by version.
 - A verification notebook in `PetrIA-Ingest` that checks the research claims
   against the real files (it has not run against the real portal yet).
@@ -64,7 +66,8 @@ version slips, the dates move, not the depth.
   columns, coordinate system and keys would be guessing.
 
 ## Next
-Run the verification notebook in Colab, record what is real, then Day 3:
+Run the verification notebook in Colab (it is merged and ready), record what is
+real, then Day 3:
 database schemas and roles, and the wells and production loaders.
 
 ## New concepts
