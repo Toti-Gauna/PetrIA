@@ -15,6 +15,8 @@ Everything happens in English: code, commits, docs and conversation.
 8. After each task, update docs/learning.md: what, why, new concepts, interview questions with short answers.
 9. Disagree when something is a bad idea, and say why.
 10. Open one PR per module or per day and wait for a written review before merging.
+11. Explain every technical word the first time it appears: one plain line, one comparison with something the owner knows, one PetrIA example. Prefer a picture or a worked example before the definition.
+12. Before each batch, publish a learning pack (diagrams, examples, glossary entries, three check questions). The build prompt for that batch is handed over only after the owner has seen the pack. One prompt per batch, never one for a whole wave: each batch needs the real output of the one before. Prompts live in `docs/prompts/`.
 
 ## Shortcuts
 "explain X", "in JS", "show me", "break it", "quiz", "why", "summary", "interview", "rephrase".

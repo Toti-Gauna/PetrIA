@@ -248,6 +248,30 @@ Interview questions:
    the real registry had 26 columns, not 5. Verification against the files
    changed the design.
 
+## Day 3: Learning pack
+
+### Concepts
+
+**Learn, then build, in a loop.** For each batch: see the idea drawn with an
+example, pass a three-question check, then paste one build prompt into the
+coding agent. The agent writes a spec and stops for your decision before it
+codes.
+
+**Why one prompt per batch.** Batch 1C needs the real tables from 1B. One giant
+prompt for the whole wave would force the builder to guess, and would remove the
+review points where you decide.
+
+**Probe workflow.** A small CI job that only checks whether a host answers
+(HEAD requests). It told us the file host is unreachable from GitHub too.
+
+### Interview questions
+
+1. **How do you hand work to an AI coding agent safely?** A written spec first,
+   explicit stop points for decisions, small tested steps, and a read-only
+   reviewer before merging.
+2. **Why show uncertainty on a map?** A single number hides what the model does
+   not know. A wide P10 to P90 band tells the reader where to be careful.
+
 ## Algorithms used in production
 
 *(None yet. The first spot is the hash-map well index in `PetrIA-Ingest`.)*

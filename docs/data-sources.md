@@ -160,7 +160,10 @@ wells is not measured.
 - What `rectificado` and `habilitado` mean in practice.
 - Whether concession codes match `cod_area` or `idareapermisoconcesion`.
 - The wells-listing, lots and permits files (not uploaded).
-- Whether the file host answers from other clouds (GitHub, Render).
+- Whether the file host answers from other clouds. **Partly answered:** a probe
+  workflow on GitHub's servers (HEAD requests only) timed out on all six file
+  links, while the catalog answered with HTTP 200 in about 23 s. So it is not
+  reachable from Colab or GitHub. Render and AWS are untested.
 
 ## Open decisions
 - Does PetrIA treat **Quintuco** (11,196 production rows, a separate label) as
