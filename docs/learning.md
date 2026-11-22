@@ -1,11 +1,26 @@
 # Learning notes
 
 What we learned, why it matters, and interview questions with short answers.
-One section per day.
+One section per wave (plan v12.2, see [the plan](plan/master-prompt.md)).
+Each batch adds 5–10 bullets and the interview question it answers. Day 1 and
+Day 2 are notes from before plan v12.2; they stay because the concepts still
+apply.
 
-## Day 1: Foundations
+## Wave 0 · Foundations (0.0–0.2)
 
-### Concepts
+## Wave 1 · 1.0 MVP (1.1–1.8)
+
+## Wave 2 · 1.1 Product (2.1–2.7)
+
+## Wave 3 · 2.0 Platform (3.1–3.5)
+
+## Wave 4 · 3.0 Production (4.1–4.5)
+
+## Before plan v12.2
+
+### Day 1: Foundations
+
+#### Concepts
 
 **ADR (Architecture Decision Record).** A short, immutable file recording one
 decision: context, options, choice, consequences. A commit says *what*
@@ -60,7 +75,7 @@ thing. We verified it on a throwaway database: a role with no grants gets
 `permission denied for schema`; after `USAGE` it gets `permission denied for
 table`; after `SELECT` it can read, and still cannot write.
 
-### Interview questions
+#### Interview questions
 
 1. **Why five repositories instead of a monorepo?**
    Services deploy independently and have different languages. It also forces
@@ -115,9 +130,9 @@ table`; after `SELECT` it can read, and still cannot write.
    It does not find oil (seismic data is not public) and it is not investment
    or drilling advice.
 
-## Day 2: Data research and re-plan
+### Day 2: Data research and re-plan
 
-### Concepts
+#### Concepts
 
 **Evidence tiers.** A research report is only as good as its sources. We tag
 each claim by where it came from: the official source, a copy of the official
@@ -167,7 +182,7 @@ basic habits are the same.
 owner's OK, then code. The spec has non-goals, a testable "done when" and a
 stop condition.
 
-### Interview questions
+#### Interview questions
 
 1. **Your research report says the data has certain columns. Do you trust it?**
    No. It came from secondary sources. I read the real files first and only
@@ -213,7 +228,7 @@ stop condition.
    adds: it costs time and usage, so we evaluate it (batch A6) instead of
    assuming it helps.
 
-### Run 2: more concepts and questions
+#### Run 2: more concepts and questions
 
 **Colab and notebooks.** A notebook is a document of cells, some text and some
 code, run one at a time with the result shown below each. Colab is Google's
