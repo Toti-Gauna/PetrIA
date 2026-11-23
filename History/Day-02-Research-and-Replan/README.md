@@ -108,4 +108,4 @@ database schemas and roles, and the wells and production loaders.
 ## New concepts
 Evidence tiers for research, a design document versus an ADR, amending an ADR,
 CKAN, open-data licenses (CC-BY), and why a research report is not
-verification. See the [learning notes](../../docs/learning.md).
+verification. See the learning notes (kept in a private study repo).

@@ -16,7 +16,7 @@ turns finished work into understanding.
 2. **Explain-back.** Ask the owner to explain the module in their own words,
    4 to 6 sentences, with one example from PetrIA. Check: the problem, the
    rule, who enforces it, the trade-off. Correct mistakes plainly.
-3. **Learning notes.** Add to `docs/learning.md`: what we did, why, new
+3. **Learning notes.** Add to `petria/learning.md` in the private study-history repo: what we did, why, new
    concepts (with the JavaScript, Express, SQL Server or Spring equivalent) and
    interview questions with short answers.
 4. **Algorithm spots.** If the batch had one, log it under "Algorithms used in
