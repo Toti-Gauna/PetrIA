@@ -1,7 +1,7 @@
 # Roadmap: waves from 0 to 3.0
 
 > **Superseded on 22 Nov 2026** by plan v12.2: see
-> [plan/master-prompt.md](plan/master-prompt.md) and [progress.md](progress.md).
+> [plan/master-prompt.md](plan/master-prompt.md) and `progress.md` (kept in a private study repo).
 > Kept as a record of the earlier plan.
 
 North star: one complete project that I can explain end to end, that also looks

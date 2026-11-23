@@ -28,4 +28,4 @@ format makes review fast and honest.
 - Never push to `main`, never merge, never change permissions, secrets or
   `CLAUDE.md`. The owner reviews in writing, then decides.
 - No secrets, personal data or raw data files in the repository.
-- Update `History/`, `docs/learning.md` and any ADR in the same pull request.
+- Update `History/` and any ADR in the same pull request.

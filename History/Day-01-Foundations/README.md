@@ -69,7 +69,7 @@ later stage has somewhere to live.
 Architecture Decision Records, polyrepo vs monorepo, one writer per schema,
 least-privilege database roles, secret scanning, static analysis, and why
 `NEXT_PUBLIC_` variables must never hold secrets. See
-[learning notes](../../docs/learning.md).
+learning notes (kept in a private study repo).
 
 ## Next
 Stage 1, data. Day 2 is research only: exploring the Vaca Muerta datasets in

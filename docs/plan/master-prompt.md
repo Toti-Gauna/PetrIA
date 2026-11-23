@@ -5,6 +5,11 @@
 > career plan) is summarized here. The full prompt stays with the owner.
 > Everything else is the plan as written.
 >
+> **Where the study files live.** `docs/progress.md`, `docs/learning.md` and
+> `docs/learn/` named below are kept in the owner's private `study-history`
+> repo, folder `petria/` (decided 23 Nov 2026). Read `progress.md` from there at
+> every "Continue PetrIA".
+>
 > **Repo names.** The plan says `petria-web`, `petria-ingest`, `petria-ml`,
 > `petria-api` and `petria-assistant`. The live repos are `PetrIA`,
 > `PetrIA-Ingest`, `PetrIA-ML`, `PetrIA-BE` and `PetrIA-RAG`, in that order
