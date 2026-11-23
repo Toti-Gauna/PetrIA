@@ -23,6 +23,10 @@ context, the options considered, what we chose, and the consequences.
 | [0005](0005-data-license-unconfirmed.md) | The data license is unconfirmed: non-commercial demo | Accepted |
 | [0006](0006-usage-metering-instead-of-billing.md) | Usage metering and quotas instead of billing | Accepted |
 | [0007](0007-agent-team-and-shared-skills.md) | A team of specialist agents with shared skills | Accepted |
+| [0008](0008-model-only-vaca-muerta.md) | Only Vaca Muerta goes into the model; Quintuco is shown, not modeled | Accepted |
+| [0009](0009-physical-well-is-the-sigla.md) | The physical well is the `sigla`, with its `idpozo` records | Accepted |
+| [0010](0010-manual-upload-then-automatic-download.md) | Manual file upload in 1.0; automatic download later | Accepted |
+| [0011](0011-target-is-12-month-cumulative-oil.md) | The target is 12-month cumulative oil, as P10 / P50 / P90 | Accepted |
 
 ## Template
 
