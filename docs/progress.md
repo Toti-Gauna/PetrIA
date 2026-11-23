@@ -5,7 +5,7 @@ batch; each batch goes through Phase A (lesson), B (gate), C (build) and D
 (close).
 
 ## Where we are
-- **Current batch:** 0.0 Onboarding · Phase B (gate).
+- **Current batch:** 0.0 Onboarding · Phase D (close). Gate passed (over 80% after retries, no debt). Left: the 2 minutes out loud, the times, the PR review.
 - **Date:** 22 Nov 2026. Wave 0 was planned for 21 Nov, so we are about one
   day behind the estimate. The deadlines still hold (1.0 deadline: 1 Dec).
 
@@ -15,7 +15,7 @@ Status: pending · lesson · gate · build · review · done · debt.
 
 | # | Batch | Repos | h | Estimated | Deadline | Model · effort | Status | Study h | Build h | Review h | Claude week % |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 0.0 | Onboarding | — | 1.5 | 21 Nov | 21 Nov | Opus · high | gate | | | | |
+| 0.0 | Onboarding | — | 1.5 | 21 Nov | 21 Nov | Opus · high | close | | | | |
 | 0.1 | Repos, CI & Docker | all 5 | 3 | 21 Nov | 21 Nov | Sonnet · medium | pending | | | | |
 | 0.2 | Database & roles | ingest | 2.5 | 21 Nov | 21 Nov | Opus · high | pending | | | | |
 | 1.1 | Ingest & cleaning | ingest | 7 | 21–22 Nov | 22–23 Nov | Opus · xhigh | pending | | | | |
@@ -65,3 +65,14 @@ pass its questions.
 | 22 Nov 2026 | Repo names: `petria-web` = `PetrIA`, `petria-ingest` = `PetrIA-Ingest`, `petria-ml` = `PetrIA-ML`, `petria-api` = `PetrIA-BE`, `petria-assistant` = `PetrIA-RAG`. **Decided (option A, 23 Nov): keep these five repos; no `-v0` rename.** | Recreating repos would cost time and gain nothing; the verified data facts and Wave 0 docs are already here. |
 | 22 Nov 2026 | Wave 0 work from before v12.2 stays: verified data facts (`docs/data-sources.md`), ADRs 0001–0007, the agent team and the skills. Batch 0.1 reconciles the ADR numbering with section 6. | Verified facts are kept; nothing is re-measured. |
 | 23 Nov 2026 | **Open, decided at table creation (0.2 / 1.1):** do not load the 40-column production file as one wide table. Split it into narrower tables linked by foreign keys (for example wells, production by month, formation). The 26-column vs 40-column precision note in the plan stays. | The owner's idea: 40 columns is too many for one table; fragmenting is cleaner. The final split will be a two-option decision with pros and cons. |
+
+## Next batch
+
+**0.1 Repos, CI & Docker** · Sonnet 5.5 · medium · 3 h planned.
+- Dates: the estimate and deadline were 21 Nov and have passed. The 1.0 deadline
+  (1 Dec) still holds: remaining work to 1.0 is about 45 h (0.1, 0.2, Wave 1).
+- Depends on: 0.0.
+- Starts with its lesson (Phase A). Most of it already exists (the five repos,
+  CI with gitleaks and Semgrep, ADRs 0001-0007). What is new: Dockerfiles, one
+  `docker-compose.yml` (Postgres + PostGIS + pgvector, RabbitMQ), and aligning
+  the ADR numbers with the plan.

@@ -1,0 +1,8 @@
+An undrilled spot is 2 km from ten producing wells. What does PetrIA show there and why a range?;An estimate (P10/P50/P90 barrels in the first 12 months) not a fact. A range shows the uncertainty: neighbours differ and a single number looks certain. Wider range = more disagreement or more distance.
+Walk one Capitulo IV row to the map naming repos and schemas.;File (by hand) > PetrIA-Ingest cleans and groups by sigla > writes geo + RabbitMQ message > PetrIA-ML reads geo and writes ml > PetrIA-BE serves > PetrIA map draws.
+PetrIA-ML tries to write to geo. What happens and what stops it?;Postgres answers permission denied. The role ml_role has USAGE and SELECT on geo but no INSERT/UPDATE/DELETE. The database stops it not the code. A test in 0.2 proves it.
+Why would counting wells by idpozo make the model look better than it is?;One well can have several idpozo records. Records of the same well can land in train and test so the exam contains the answers. Group by sigla before splitting.
+I ask the chat about a well that does not exist in the data. What must it answer?;Say what was searched and that nothing was found with the source. Never invent data. It is not in our data (it may exist in reality). Abstention is a correct answer.
+What does 1.0 predict and what comes later?;1.0 predicts barrels in the first 12 months (P10/P50/P90). Price payback and profit come in 1.1 (batch 2.1).
+Who writes to which schema?;Ingest writes geo. ML writes ml. BE writes platform. RAG writes rag. Each service only its own.
+What is an idempotent load?;Loading the same file twice leaves the same result. Like an upsert: update if it exists insert if not.

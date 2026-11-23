@@ -8,6 +8,34 @@ apply.
 
 ## Wave 0 · Foundations (0.0–0.2)
 
+### 0.0 Onboarding
+
+- PetrIA estimates how much oil an undrilled zone could produce in its first
+  12 months, as a range (P10, P50, P90), and has an assistant that cites its
+  data or says it doesn't know. It does not discover oil and is not
+  investment advice.
+- One well's path: raw file, then Ingest (fix, group, load), then `geo`, then a
+  RabbitMQ "new data" message, then ML, then `ml`, then the API, then the map.
+- Drilled wells show real recorded data. Only empty spots get a prediction.
+- Two rules: the browser only talks to the API, and each service writes only to
+  its own schema.
+- The database enforces the second rule with roles. `ml_role` can read `geo`
+  but gets `permission denied` on any write. A test in 0.2 proves it.
+- Counting by `idpozo` instead of `sigla` can put two records of one well in
+  train and test. The exam then contains the answers, and the score is
+  inflated. We group by `sigla` before splitting.
+- A wider P10-P90 range means more disagreement between neighbours, or more
+  distance from them. A range shows risk that one number hides.
+- Abstention: when the data has no such well, the assistant says what it
+  searched and found nothing. It never fills the gap.
+- Money (price, payback, profit) is version 1.1. Version 1.0 predicts only
+  barrels in the first 12 months.
+
+**Interview question:** *Why did you group wells by `sigla` before splitting
+train and test?* Because one physical well can have several `idpozo` records.
+If records of the same well land on both sides, the model is tested on wells
+it has effectively seen, and the metric looks better than reality.
+
 ## Wave 1 · 1.0 MVP (1.1–1.8)
 
 ## Wave 2 · 1.1 Product (2.1–2.7)
