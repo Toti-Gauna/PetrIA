@@ -61,6 +61,21 @@ infra/         local docker-compose and Keycloak realm (added later)
 The [build log](History/README.md) is written as the project advances, one
 entry per working day.
 
+## Local infrastructure
+
+Needs Docker on your computer.
+
+```bash
+cd infra
+cp .env.example .env              # local-only values, git-ignored
+docker compose up -d --build --wait
+docker compose exec db sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "SELECT postgis_version();"'
+docker compose down               # data stays; "down -v" erases it
+```
+
+It starts Postgres with PostGIS and pgvector, and RabbitMQ (management UI on
+`http://localhost:15672`). Production uses Neon instead of this container.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).

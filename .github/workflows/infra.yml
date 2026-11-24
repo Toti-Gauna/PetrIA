@@ -1,0 +1,45 @@
+name: infra
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  compose-smoke:
+    name: Compose smoke test (Postgres + extensions, RabbitMQ)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: infra
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - name: Create the local .env from the example
+        run: cp .env.example .env
+      - name: Start the stack and wait for the healthchecks
+        run: docker compose up -d --build --wait
+      - name: PostGIS must answer
+        run: |
+          docker compose exec -T db sh -c "psql -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\" -v ON_ERROR_STOP=1 -tAc \"SELECT postgis_version();\""
+      - name: pgvector must be installed
+        run: |
+          v=$(docker compose exec -T db sh -c "psql -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\" -v ON_ERROR_STOP=1 -tAc \"SELECT extversion FROM pg_extension WHERE extname = 'vector';\"")
+          echo "pgvector version: $v"
+          test -n "$v"
+      - name: Show logs if something failed
+        if: failure()
+        run: docker compose logs
+      - name: Stop the stack and erase its volumes
+        if: always()
+        run: docker compose down -v
+
+  web-image:
+    name: Web image builds
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - run: docker build -t petria-web:ci .
