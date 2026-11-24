@@ -12,7 +12,7 @@
 # Why not 16-3.4: CI showed it is built on Debian bullseye, whose PostgreSQL
 # package repository now answers 404, so pgvector cannot be installed. Pick a
 # base on a Debian release that is still supported.
-FROM postgis/postgis:16-3.6
+FROM postgis/postgis:18-3.6
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends postgresql-16-pgvector \
