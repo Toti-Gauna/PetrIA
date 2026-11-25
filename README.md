@@ -85,7 +85,9 @@ docker compose exec -T db sh -c 'psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d 
 ```
 
 The init scripts run only when the data volume is new. After changing them, run
-`docker compose down -v` (this erases the local data) and start again.
+`docker compose down -v` (this erases the local data) and start again. The same
+applies if you started the stack before it moved to Postgres 18: data from 16
+cannot be opened by 18.
 
 ### Neon (the cloud database)
 

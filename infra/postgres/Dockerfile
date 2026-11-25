@@ -5,17 +5,18 @@
 # image and add pgvector on top.
 #
 # The tag is pinned on purpose (never "latest"): the package name below
-# contains the Postgres major version (16), so the base must not move by itself.
+# contains the Postgres major version (18), so the base must not move by itself.
 # Dependabot proposes a new base as a pull request.
-# Neon's Postgres version is compared with this one in batch 0.2.
 #
-# Why not 16-3.4: CI showed it is built on Debian bullseye, whose PostgreSQL
-# package repository now answers 404, so pgvector cannot be installed. Pick a
-# base on a Debian release that is still supported.
-FROM postgis/postgis:16-3.6
+# Major version 18 matches Neon (the cloud database runs 18.7, read by the
+# neon workflow on 2026-11-25). Keep local and cloud on the same major version.
+#
+# History: 16-3.4 failed (Debian bullseye, PostgreSQL apt repo answers 404);
+# 16-3.6 worked; moved to 18 to match Neon (ADR-0012).
+FROM postgis/postgis:18-3.6
 
 RUN apt-get update \
- && apt-get install -y --no-install-recommends postgresql-16-pgvector \
+ && apt-get install -y --no-install-recommends postgresql-18-pgvector \
  && rm -rf /var/lib/apt/lists/*
 
 # Scripts in this folder run once, when the data folder is empty:
