@@ -34,9 +34,14 @@ jobs:
           docker compose exec -T db sh -c 'psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB"' < postgres/tests/roles_test.sql
       - name: "Roles: each service can log in with its own password"
         run: |
+          # Read a value from the local .env file (dev-only values).
+          envval() { grep "^$1=" .env | cut -d= -f2-; }
+          db=$(envval POSTGRES_DB)
           for pair in ingest_svc:INGEST_SVC_PASSWORD ml_svc:ML_SVC_PASSWORD api_svc:API_SVC_PASSWORD rag_svc:RAG_SVC_PASSWORD; do
             user=${pair%%:*}; var=${pair##*:}
-            got=$(docker compose exec -T -e U="$user" -e V="$var" db sh -c 'eval "PGPASSWORD=\$$V" psql -h localhost -U "$U" -d "$POSTGRES_DB" -tAc "SELECT current_user"')
+            # -h localhost forces a password check (not the trusted local socket).
+            got=$(docker compose exec -T -e PGPASSWORD="$(envval "$var")" db \
+                  psql -h localhost -U "$user" -d "$db" -tAc "SELECT current_user")
             echo "login as $user -> $got"
             test "$got" = "$user"
           done
