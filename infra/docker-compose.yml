@@ -11,7 +11,9 @@ services:
     ports:
       - "127.0.0.1:5432:5432"          # only reachable from this computer
     volumes:
-      - pgdata:/var/lib/postgresql/data  # keeps the data after "down"
+      # Keeps the data after "down". Postgres 18 images keep their data under
+      # /var/lib/postgresql/18/..., so the volume is mounted one level up.
+      - pgdata:/var/lib/postgresql
     healthcheck:
       # "started" is not "ready": ask Postgres if it accepts connections.
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]

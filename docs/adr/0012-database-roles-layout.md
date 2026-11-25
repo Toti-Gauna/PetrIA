@@ -49,8 +49,15 @@ Rules:
 + A new reader is one line: `GRANT geo_reader TO new_svc;`.
 - Tables are owned by the service login. Replacing a login later needs
   `REASSIGN OWNED`.
-- Neon facts are **not verified yet**: its Postgres version (local is 16), and
-  whether a non-superuser admin can run every statement above. The first `neon`
-  run records them here in a follow-up.
 - Workflow logs of a public repo are public: the Neon workflow never prints the
   host, the connection string or a password.
+
+## Verified on Neon (2026-11-25, first `neon` run)
+- Postgres **18.7**. The admin is `superuser=false createrole=true`.
+- Every statement of the setup ran with that admin, including the default
+  privileges and `SET ROLE` in the tests.
+- All 23 role checks passed (rolled back), and the four service logins
+  connected with their own passwords.
+- Local was on Postgres 16, so the local image moved to `postgis/postgis:18-3.6`
+  with `postgresql-18-pgvector`, to keep local and cloud on the same major
+  version.
