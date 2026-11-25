@@ -27,6 +27,7 @@ context, the options considered, what we chose, and the consequences.
 | [0009](0009-physical-well-is-the-sigla.md) | The physical well is the `sigla`, with its `idpozo` records | Accepted |
 | [0010](0010-manual-upload-then-automatic-download.md) | Manual file upload in 1.0; automatic download later | Accepted |
 | [0011](0011-target-is-12-month-cumulative-oil.md) | The target is 12-month cumulative oil, as P10 / P50 / P90 | Accepted |
+| [0012](0012-database-roles-layout.md) | Database roles: job-title groups, one login per service | Accepted |
 
 ## Template
 

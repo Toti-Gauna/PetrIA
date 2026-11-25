@@ -1,0 +1,89 @@
+name: neon
+
+# Applies the database setup (extensions, schemas, roles, passwords) to Neon
+# and runs the same role tests as the local container. Manual only.
+#
+# Needs these repository secrets (Settings -> Secrets and variables -> Actions):
+#   NEON_ADMIN_URL         Neon connection string of the admin (direct, not pooled)
+#   NEON_INGEST_PASSWORD   NEON_ML_PASSWORD   NEON_API_PASSWORD   NEON_RAG_PASSWORD
+#
+# The logs of a public repo are public: this workflow never prints the
+# connection string, the host or a password. GitHub also masks secret values.
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "apply-to-neon" to run against the Neon database'
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  apply:
+    name: Apply setup to Neon and test roles
+    if: ${{ inputs.confirm == 'apply-to-neon' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      NEON_ADMIN_URL: ${{ secrets.NEON_ADMIN_URL }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: psql is available
+        run: command -v psql || (sudo apt-get update && sudo apt-get install -y postgresql-client)
+
+      - name: Neon facts (version and admin attributes)
+        run: |
+          test -n "$NEON_ADMIN_URL" || { echo "Secret NEON_ADMIN_URL is missing"; exit 1; }
+          psql "$NEON_ADMIN_URL" -v ON_ERROR_STOP=1 -tAc "SHOW server_version;"
+          psql "$NEON_ADMIN_URL" -v ON_ERROR_STOP=1 -tAc \
+            "SELECT 'superuser=' || rolsuper || ' createrole=' || rolcreaterole FROM pg_roles WHERE rolname = current_user;"
+
+      - name: Extensions (same file as local)
+        run: psql "$NEON_ADMIN_URL" -v ON_ERROR_STOP=1 -f infra/postgres/init/01-extensions.sql
+
+      - name: Schemas and roles (same file as local)
+        run: psql "$NEON_ADMIN_URL" -v ON_ERROR_STOP=1 -f infra/postgres/init/02-schemas-and-roles.sql
+
+      - name: Service passwords from secrets
+        env:
+          INGEST_PW: ${{ secrets.NEON_INGEST_PASSWORD }}
+          ML_PW: ${{ secrets.NEON_ML_PASSWORD }}
+          API_PW: ${{ secrets.NEON_API_PASSWORD }}
+          RAG_PW: ${{ secrets.NEON_RAG_PASSWORD }}
+        run: |
+          for v in INGEST_PW ML_PW API_PW RAG_PW; do
+            eval "val=\${$v}"; test -n "$val" || { echo "A service password secret is missing ($v)"; exit 1; }
+          done
+          psql "$NEON_ADMIN_URL" -v ON_ERROR_STOP=1 \
+            -v ingest_pw="$INGEST_PW" -v ml_pw="$ML_PW" -v api_pw="$API_PW" -v rag_pw="$RAG_PW" \
+            -f infra/postgres/sql/set-passwords.sql
+
+      - name: "Roles: the wall holds (same tests as local, rolled back)"
+        run: psql "$NEON_ADMIN_URL" -v ON_ERROR_STOP=1 -f infra/postgres/tests/roles_test.sql
+
+      - name: "Roles: each service can log in with its own password"
+        env:
+          NEON_INGEST_PASSWORD: ${{ secrets.NEON_INGEST_PASSWORD }}
+          NEON_ML_PASSWORD: ${{ secrets.NEON_ML_PASSWORD }}
+          NEON_API_PASSWORD: ${{ secrets.NEON_API_PASSWORD }}
+          NEON_RAG_PASSWORD: ${{ secrets.NEON_RAG_PASSWORD }}
+        run: |
+          python3 - <<'PY'
+          import os, subprocess, urllib.parse as up
+          base = up.urlsplit(os.environ["NEON_ADMIN_URL"])
+          host = base.hostname
+          logins = [("ingest_svc", "NEON_INGEST_PASSWORD"), ("ml_svc", "NEON_ML_PASSWORD"),
+                    ("api_svc", "NEON_API_PASSWORD"), ("rag_svc", "NEON_RAG_PASSWORD")]
+          for user, var in logins:
+              conn = f"host={host} port={base.port or 5432} dbname={base.path.lstrip('/')} user={user} sslmode=require"
+              env = dict(os.environ, PGPASSWORD=os.environ[var])
+              out = subprocess.run(["psql", conn, "-tAc", "SELECT current_user"],
+                                   env=env, capture_output=True, text=True)
+              if out.returncode != 0 or out.stdout.strip() != user:
+                  err = out.stderr.replace(host, "<neon-host>").strip()[:300]
+                  raise SystemExit(f"FAIL: {user} could not log in: {err}")
+              print(f"ok   {user} can log in")
+          PY

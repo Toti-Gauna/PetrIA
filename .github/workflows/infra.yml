@@ -29,6 +29,22 @@ jobs:
           v=$(docker compose exec -T db sh -c "psql -U \"\$POSTGRES_USER\" -d \"\$POSTGRES_DB\" -v ON_ERROR_STOP=1 -tAc \"SELECT extversion FROM pg_extension WHERE extname = 'vector';\"")
           echo "pgvector version: $v"
           test -n "$v"
+      - name: "Roles: the wall holds (0.2)"
+        run: |
+          docker compose exec -T db sh -c 'psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB"' < postgres/tests/roles_test.sql
+      - name: "Roles: each service can log in with its own password"
+        run: |
+          # Read a value from the local .env file (dev-only values).
+          envval() { grep "^$1=" .env | cut -d= -f2-; }
+          db=$(envval POSTGRES_DB)
+          for pair in ingest_svc:INGEST_SVC_PASSWORD ml_svc:ML_SVC_PASSWORD api_svc:API_SVC_PASSWORD rag_svc:RAG_SVC_PASSWORD; do
+            user=${pair%%:*}; var=${pair##*:}
+            # -h localhost forces a password check (not the trusted local socket).
+            got=$(docker compose exec -T -e PGPASSWORD="$(envval "$var")" db \
+                  psql -h localhost -U "$user" -d "$db" -tAc "SELECT current_user")
+            echo "login as $user -> $got"
+            test "$got" = "$user"
+          done
       - name: Show logs if something failed
         if: failure()
         run: docker compose logs
