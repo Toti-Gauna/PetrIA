@@ -76,6 +76,25 @@ docker compose down               # data stays; "down -v" erases it
 It starts Postgres with PostGIS and pgvector, and RabbitMQ (management UI on
 `http://localhost:15672`). Production uses Neon instead of this container.
 
+The database comes with four schemas (`geo`, `ml`, `platform`, `rag`) and one
+login per service ([ADR-0012](docs/adr/0012-database-roles-layout.md)). Prove
+the permissions hold:
+
+```bash
+docker compose exec -T db sh -c 'psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB"' < postgres/tests/roles_test.sql
+```
+
+The init scripts run only when the data volume is new. After changing them, run
+`docker compose down -v` (this erases the local data) and start again.
+
+### Neon (the cloud database)
+
+The same setup is applied to Neon by the manual `neon` workflow (Actions, then
+"neon", then "Run workflow", and type `apply-to-neon`). It needs five repository
+secrets: `NEON_ADMIN_URL` (the direct connection string) and
+`NEON_INGEST_PASSWORD`, `NEON_ML_PASSWORD`, `NEON_API_PASSWORD`,
+`NEON_RAG_PASSWORD`.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).

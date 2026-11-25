@@ -18,5 +18,8 @@ RUN apt-get update \
  && apt-get install -y --no-install-recommends postgresql-16-pgvector \
  && rm -rf /var/lib/apt/lists/*
 
-# Scripts in this folder run once, when the data folder is empty.
+# Scripts in this folder run once, when the data folder is empty:
+# 01 extensions, 02 schemas and roles, 03 local dev passwords.
 COPY init/ /docker-entrypoint-initdb.d/
+# Shared SQL used by the init scripts (and by the Neon workflow from the repo).
+COPY sql/ /petria-sql/
